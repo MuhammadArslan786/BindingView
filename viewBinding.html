@@ -1,0 +1,52 @@
+<p>How to usee View Binding in Android studio 3.6+ | Java | Androidx | codingWithMitch</p>
+<h3>Why we need View Binding?</h3>
+<p>Use to new View Binding library to replace findViewById in your app. It let you write a safe and concise code. It is less boilerplate. Instead of lookup every view, it generates a binding object that holds all the views for you. View Binding adds safety to your code. Whenever you inflate a view binding object will give you the automatically right type of that view. And if the view is only present in the landscape, then the binding will be nullable. This helps you to prevent crashing in production.</p>
+<p>View binding required android studio 3.6 or higher, android Gradle plugin 3.6+. To use in your module enable it in your build.gradle file. you don't need to include any library to use view binding. when you enable the compiler it will automatically recompile your project and generate binding objects for every layout. so if you have a layout file called activity_main.xml View binding generate a small class called ActivityMainBinding. It will have one correctly typed and null safe property for every view with an Id in the layout. Then in the activity instead of inflating the layout directly, you can use the inflate method on ActivityMainBinding. It will inflate the layout for you and return a binding object with all views bound. The layout for your activity is stored in a special property called root. so you can call setContentView(binding.root). And that is all you need to know to get started with view binding. It is really simple, safer, and more concise then FindViewById.</p>
+<h3>What you need for View Binding:</h3>
+<ul>
+<li>Android studio 3.6 or higher</li>
+<li>Android Gradle plugin 3.6 or higher</li>
+</ul>
+<h3>Which language you can use for this:</h3>
+<ul>
+<li>java</li>
+<li>kotlin</li>
+</ul>
+<p>&nbsp;</p>
+<h2><strong>Beginning of the tutorial:</strong></h2>
+<p><strong>Step 1: Create a New Project</strong></p>
+<p>First of All, create a new android studio project by clicking on <strong>File -&gt; New -&gt; New Project.</strong></p>
+
+<p><strong>
+
+<img src="https://i.imgur.com/QPe5dNC.png" alt="" width="1325" height="745" /></strong></p>
+<p><strong>Step 2: Build.gradle (app)</strong></p>
+<p>Next, go to the Build.gradle (app) level and enable the view Binding by inserting the below code in android{....} block and click <strong>sync Now</strong></p>
+<blockquote><span style="color: #ff0000;">viewBinding {</span><br /><span style="color: #ff0000;"> enabled = true</span><br /><span style="color: #ff0000;">}</span></blockquote>
+<p><strong><img src="https://i.imgur.com/CmeFdG7.png" alt="" width="1366" height="768" /></strong></p>
+<p><strong>Step 3: Design the layout.</strong></p>
+<p>Now go to activity_main.xml which is the default activity and Enter some code according to your need. I am adding just an EditText and Button for the sake of simplicity.</p>
+<p>Below is the complete code of activity.</p>
+<p>activity_main.xml</p>
+<blockquote>
+<pre><span style="color: #ff0000;">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br /><span style="color: #ff0000;">&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"</span><br /><span style="color: #ff0000;">    xmlns:app="http://schemas.android.com/apk/res-auto"</span><br /><span style="color: #ff0000;">    xmlns:tools="http://schemas.android.com/tools"</span><br /><span style="color: #ff0000;">    android:layout_width="match_parent"</span><br /><span style="color: #ff0000;">    android:layout_height="match_parent"</span><br /><span style="color: #ff0000;">    tools:context=".MainActivity"&gt;</span><br /><br /><span style="color: #ff0000;">    &lt;EditText</span><br /><span style="color: #ff0000;">        android:id="@+id/edit_text"</span><br /><span style="color: #ff0000;">        android:layout_width="380dp"</span><br /><span style="color: #ff0000;">        android:layout_height="wrap_content"</span><br /><span style="color: #ff0000;">        app:layout_constraintEnd_toEndOf="parent"</span><br /><span style="color: #ff0000;">        app:layout_constraintStart_toStartOf="parent"</span><br /><span style="color: #ff0000;">        app:layout_constraintTop_toTopOf="parent"</span><br /><span style="color: #ff0000;">        app:layout_constraintBottom_toBottomOf="parent"/&gt;</span><br /><br /><span style="color: #ff0000;">    &lt;Button</span><br /><span style="color: #ff0000;">        android:id="@+id/button"</span><br /><span style="color: #ff0000;">        android:layout_width="380dp"</span><br /><span style="color: #ff0000;">        android:layout_height="wrap_content"</span><br /><span style="color: #ff0000;">        android:text="click me"</span><br /><span style="color: #ff0000;">        app:layout_constraintEnd_toEndOf="parent"</span><br /><span style="color: #ff0000;">        app:layout_constraintStart_toStartOf="parent"</span><br /><span style="color: #ff0000;">        app:layout_constraintTop_toBottomOf="@+id/edit_text" /&gt;</span><br /><br /><br /><span style="color: #ff0000;">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;<br /><br /></span></pre>
+</blockquote>
+<p><img src="https://i.imgur.com/5O6LuUG.png" alt="" width="1366" height="768" /></p>
+<p><strong>Step 4: Bind your view in MainActivity.java</strong></p>
+<p>Now go to the MainAcitvity.java File.</p>
+<p>Afterward, you can see an automatic class is automatically imported in your project called "ActivityMainBinding". Just Import this class.</p>
+<p><img src="https://i.imgur.com/wDY9bcL.png" alt="" width="1366" height="768" /></p>
+<p>&nbsp;</p>
+<p>Next, remove the below code from your MainActivity.java</p>
+<blockquote>
+<p>&nbsp;</p>
+<p><span style="color: #ff0000;">&nbsp;setContentView(R.layout.activity_main);&nbsp;&nbsp;</span></p>
+<p>&nbsp;</p>
+</blockquote>
+<p>Next, implement the below code in the onCreate method.</p>
+<p><span style="color: #ff0000;">binding = ActivityMainBinding.inflate(getLayoutInflater());</span><br /><span style="color: #ff0000;">View view = binding.getRoot(); //Root xml or viewGroup will be a part of converted view over here</span><br /><span style="color: #ff0000;">setContentView(view); //view is set by view binding</span><br /><br /> <br /><strong>Step 5: Use any component directly without "findViewById"</strong><br /><br />Now you can use any component directly without accessing the actual "findViewById"</p>
+<p>Just like code below.</p>
+<pre><span style="color: #ff0000;">binding.button.setOnClickListener(new View.OnClickListener() {</span><br /><span style="color: #ff0000;">    @Override</span><br /><span style="color: #ff0000;">    public void onClick(View v) {</span><br /><span style="color: #ff0000;">        String text =binding.editText.getText().toString();</span><br /><span style="color: #ff0000;">        Toast.makeText(MainActivity.this,text,Toast.LENGTH_LONG).show();</span><br /><span style="color: #ff0000;">    }</span><br /><span style="color: #ff0000;">});<br /><br /></span></pre>
+<p>Here is the complete code of the activity.</p>
+<p>MainActivity.java</p>
+<pre><span style="color: #ff0000;">package com.arslan6015.newviewbindingexample;</span><br /><br /><span style="color: #ff0000;">import androidx.appcompat.app.AppCompatActivity;</span><br /><br /><span style="color: #ff0000;">import android.os.Bundle;</span><br /><span style="color: #ff0000;">import android.view.View;</span><br /><span style="color: #ff0000;">import android.widget.Toast;</span><br /><br /><span style="color: #ff0000;">import com.arslan6015.newviewbindingexample.databinding.ActivityMainBinding;</span><br /><br /><span style="color: #ff0000;">public class MainActivity extends AppCompatActivity {</span><br /><br /><span style="color: #ff0000;">    ActivityMainBinding binding;</span><br /><br /><span style="color: #ff0000;">    @Override</span><br /><span style="color: #ff0000;">    protected void onCreate(Bundle savedInstanceState) {</span><br /><span style="color: #ff0000;">        super.onCreate(savedInstanceState);</span><br /><br /><span style="color: #ff0000;">    binding = ActivityMainBinding.inflate(getLayoutInflater());</span><br /><span style="color: #ff0000;">    View view = binding.getRoot();          //Root xml or viewGroup will be a part of converted view over here</span><br /><span style="color: #ff0000;">    setContentView(view);                   //view is set by view binding</span><br /><br /><span style="color: #ff0000;">        binding.button.setOnClickListener(new View.OnClickListener() {</span><br /><span style="color: #ff0000;">            @Override</span><br /><span style="color: #ff0000;">            public void onClick(View v) {</span><br /><span style="color: #ff0000;">                String text =binding.editText.getText().toString();</span><br /><span style="color: #ff0000;">                Toast.makeText(MainActivity.this,text,Toast.LENGTH_LONG).show();</span><br /><span style="color: #ff0000;">            }</span><br /><span style="color: #ff0000;">        });</span><br /><span style="color: #ff0000;">    }</span><br /><span style="color: #ff0000;">}<br /></span><br /><br />Now just run the app and app works fine.<br />If you want to learn more check out the <a href="https://developer.android.com/topic/libraries/view-binding" target="_blank" rel="noopener">official documentation</a></pre>
